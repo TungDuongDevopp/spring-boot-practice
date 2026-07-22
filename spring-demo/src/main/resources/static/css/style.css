@@ -7,3 +7,11 @@ nav{
     gap: 8px;
 
 }
+.tablediv{
+    padding: 20px;
+    text-align: center;
+}
+.title{
+    margin-top: 15px;
+    margin-left: 20px;
+}
