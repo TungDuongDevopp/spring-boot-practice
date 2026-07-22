@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+    <style>
+        h1{
+            color:red;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav>
+      <a href="/">Trang chủ</a>
+      <a href="/aboutus">About us</a>
+      <a href="/contactus">Contact us</a>
+</nav>
+ <h1>Xin chào các bạn tôi tên là <em th:text="${name}"></em> người mới bắt đầu học Spring boot</h1>
+<script th:src="@{/script/script.js}"></script>
+</body>
+</html>
