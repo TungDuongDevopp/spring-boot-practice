@@ -5,10 +5,7 @@ import com.tungduong.springdemo.model.User;
 import com.tungduong.springdemo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,6 +39,18 @@ public class HelloController {
     @PostMapping("/create")
     public String postCreatePage(@ModelAttribute User createUser){
         service.createUser(createUser);
+        return "redirect:/user";
+    }
+
+    @GetMapping("/{id}")
+    public String getUpdatePage(Model model, @PathVariable Long id){
+        User updateUser =  service.getUserById(id).orElse(null);
+        model.addAttribute("user",updateUser);
+        return "user/update";
+    }
+    @PostMapping("/update")
+    public String postUpdatePage(@ModelAttribute User updateUser){
+        service.updateUser(updateUser);
         return "redirect:/user";
     }
 

@@ -25,15 +25,20 @@
 					<th scope="col">Name</th>
 					<th scope="col">Email</th>
 					<th scope="col">Address</th>
+					<th scope="col">Thao tác</th>
 				</tr>
 			</thead>
 			<tbody>
 				
-				<tr th:each="user, status : ${users}">
+				<tr th:each="user: ${users}">
 					<th th:text="${user.id}"></th>
 					<td th:text="${user.name}"/>
 					<td th:text="${user.email}"/>
 					<td th:text="${user.address}"/>
+					<td>
+						<a th:href="@{user/{id}(id = ${user.id})}"  class="btn btn-warning">Sửa</a>
+						<a class="btn btn-danger">Xóa</a>
+					</td>
 				</tr>
 				
 			</tbody>
