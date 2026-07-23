@@ -1,11 +1,24 @@
 package com.tungduong.springdemo.model;
 
 public class User {
+    private long id;
     private String name;
     private String email;
     private String address;
 
-    public User(String name,String email, String address) {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+
+    public User(){}
+
+    public User(long id, String name,String email, String address) {
+        this.id = id;
         this.address = address;
         this.email = email;
         this.name = name;
