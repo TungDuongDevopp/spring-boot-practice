@@ -4,7 +4,6 @@ import com.tungduong.springdemo.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +40,11 @@ public class UserService {
         current.get().setEmail(user.getEmail());
         current.get().setAddress(user.getAddress());
         return  current.orElse(null);
+    }
+    public boolean deleteUser(Long id){
+        Optional<User> current = getUserById(id);
+        if(current.isEmpty()) return false;
+        userList.remove(current.get());
+        return true;
     }
 }

@@ -15,3 +15,16 @@ nav{
     margin-top: 15px;
     margin-left: 20px;
 }
+
+.actionblock {
+    display: flex;
+    gap: 10px; /* Khoảng cách giữa 2 nút */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Thêm !important nếu vẫn bị Bootstrap ghi đè */
+
+th{
+    text-align: center;
+}

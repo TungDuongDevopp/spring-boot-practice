@@ -53,5 +53,13 @@ public class HelloController {
         service.updateUser(updateUser);
         return "redirect:/user";
     }
+    @DeleteMapping("/delete/{id}")
+    public String postDeletePage(@PathVariable Long id){
+
+        service.deleteUser(id);
+        return "redirect:/user";
+    }
+
+
 
 }
