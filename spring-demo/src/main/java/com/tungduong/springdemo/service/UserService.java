@@ -10,9 +10,9 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    public final List<User> userList = new ArrayList<>(List.of(new User(1L,"Nguyễn Văn A", "a.nguyen@example.com", "Hà Nội"),
-            new User(2L,"Trần Thị B", "b.tran@example.com", "TP.HCM"),
-            new User(3L,"Lê Văn C", "c.le@example.com", "Đà Nẵng"))
+    public final List<User> userList = new ArrayList<>(List.of(new User(1L,"Nguyễn Văn A","123456" ,"a.nguyen@example.com", "Hà Nội"),
+            new User(2L,"Trần Thị B","123456", "b.tran@example.com", "TP.HCM"),
+            new User(3L,"Lê Văn C","123456", "c.le@example.com", "Đà Nẵng"))
     );
 
     private Long nextId = (long)userList.size() + 1;
@@ -39,6 +39,7 @@ public class UserService {
         current.get().setName(user.getName());
         current.get().setEmail(user.getEmail());
         current.get().setAddress(user.getAddress());
+        current.get().setPassword(user.getPassword());
         return  current.orElse(null);
     }
     public boolean deleteUser(Long id){

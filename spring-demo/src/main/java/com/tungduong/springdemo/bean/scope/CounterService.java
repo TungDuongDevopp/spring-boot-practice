@@ -4,8 +4,8 @@ package com.tungduong.springdemo.bean.scope;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-@Scope("prototype") // <--- Đặt là PROTOTYPE
-@Service
+//@Scope("prototype") // <--- Đặt là PROTOTYPE
+//@Service
 public class CounterService {
 
 	private static int creationCount = 0;
