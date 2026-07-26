@@ -1,6 +1,7 @@
 package com.tungduong.springdemo.service;
 
 import com.tungduong.springdemo.model.User;
+import com.tungduong.springdemo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,42 +11,36 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    public final List<User> userList = new ArrayList<>(List.of(new User(1L,"Nguyễn Văn A","123456" ,"a.nguyen@example.com", "Hà Nội"),
-            new User(2L,"Trần Thị B","123456", "b.tran@example.com", "TP.HCM"),
-            new User(3L,"Lê Văn C","123456", "c.le@example.com", "Đà Nẵng"))
-    );
+    private final UserRepository repository;
 
-    private Long nextId = (long)userList.size() + 1;
+    public UserService(UserRepository repository){
+        this.repository = repository;
+    }
 
-    public List<User> getUserList(){
+   public void createUser(User user){
+        repository.save(user);
+   }
+   public List<User> readUser(){
+        List<User> userList = repository.findAll();
         return userList;
-    }
-    public User createUser(User user){
-        user.setId(nextId++);
-        userList.add(user);
-        return user;
-    }
+   }
 
-    public Optional<User> getUserById(Long id){
-        for(User user:userList){
-            if(user.getId() == id) return Optional.of(user);
-        }
-        return Optional.empty();
-    }
+   public Optional<User> getUserById(Long id){
+       return repository.findById(id);
+   }
 
-    public User updateUser(User user){
-        Optional<User> current = getUserById(user.getId());
-       if(current.isEmpty()) return null;
-        current.get().setName(user.getName());
-        current.get().setEmail(user.getEmail());
-        current.get().setAddress(user.getAddress());
-        current.get().setPassword(user.getPassword());
-        return  current.orElse(null);
-    }
-    public boolean deleteUser(Long id){
-        Optional<User> current = getUserById(id);
-        if(current.isEmpty()) return false;
-        userList.remove(current.get());
-        return true;
-    }
+   public User updateUser(User user){
+        User currentUser = getUserById(user.getId()).get();
+        currentUser.setName(user.getName());
+        currentUser.setEmail(user.getEmail());
+        currentUser.setAddress(user.getAddress());
+        repository.save(currentUser);
+        return currentUser;
+   }
+   public boolean deleteUser (Long id){
+       User currentUser = getUserById(id).get();
+       if (currentUser==null) return false;
+       repository.deleteById(id);
+       return true;
+   }
 }

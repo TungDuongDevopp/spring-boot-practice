@@ -26,7 +26,7 @@ public class HelloController {
 
     @GetMapping
     public String showUser(Model model) {
-        List<User> userList = service.getUserList();
+        List<User> userList = service.readUser();
         model.addAttribute("users",userList);
         return "user/show";
     }
