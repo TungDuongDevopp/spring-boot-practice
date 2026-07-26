@@ -11,11 +11,11 @@ import java.util.List;
 
 @Controller  // Controller rest chuyên nhận request HTTP trả trực tiếp dữ liệu
 @RequestMapping("/user")
-public class HelloController {
+public class UserController {
 
     private final UserService service;
 
-    public HelloController(UserService service) {
+    public UserController(UserService service) {
         this.service = service;
     }
 
