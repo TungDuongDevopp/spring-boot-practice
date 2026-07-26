@@ -3,8 +3,10 @@ package com.tungduong.springdemo.controller;
 
 import com.tungduong.springdemo.model.User;
 import com.tungduong.springdemo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +39,10 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String postCreatePage(@ModelAttribute User createUser){
+    public String postCreatePage(@Valid @ModelAttribute User createUser, BindingResult result){
+        if(result.hasErrors()){
+            return "user/create";
+        }
         service.createUser(createUser);
         return "redirect:/user";
     }
@@ -49,7 +54,10 @@ public class UserController {
         return "user/update";
     }
     @PostMapping("/update")
-    public String postUpdatePage(@ModelAttribute User updateUser){
+    public String postUpdatePage( @Valid @ModelAttribute User updateUser,BindingResult result){
+        if(result.hasErrors()){
+            return "user/update";
+        }
         service.updateUser(updateUser);
         return "redirect:/user";
     }
