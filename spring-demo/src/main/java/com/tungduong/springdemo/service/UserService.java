@@ -26,7 +26,7 @@ public class UserService {
         user.setPassword(hashPassword);
         repository.save(user);
    }
-   public List<User> readUser(){
+   public List<User> getAllUser(){
         List<User> userList = repository.findAll();
         return userList;
    }
@@ -35,8 +35,16 @@ public class UserService {
        return repository.findById(id);
    }
 
+    public Optional<User> getUserByEmail(String email){
+        return repository.findByEmail(email);
+    }
+
    public User updateUser(User user){
-        User currentUser = getUserById(user.getId()).get();
+
+        Optional<User> optional = getUserById(user.getId());
+        if(optional.isEmpty()) return null;
+
+        User currentUser = optional.get();
         currentUser.setName(user.getName());
         currentUser.setEmail(user.getEmail());
         currentUser.setAddress(user.getAddress());
@@ -44,8 +52,7 @@ public class UserService {
         return currentUser;
    }
    public boolean deleteUser (Long id){
-       User currentUser = getUserById(id).get();
-       if (currentUser==null) return false;
+       if(repository.existsById(id)) return false;
        repository.deleteById(id);
        return true;
    }

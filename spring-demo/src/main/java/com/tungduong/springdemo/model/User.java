@@ -15,7 +15,7 @@ public class User {
 
     @NotBlank(message = "Name không được trống")
     private String name;
-    @NotBlank(message = "Password không được trống")
+    @Column(length = 60)
     private String password;
     @NotBlank(message = "Email không được trống")
     private String email;
