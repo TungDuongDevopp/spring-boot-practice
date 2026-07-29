@@ -2,6 +2,7 @@ package com.tungduong.springdemo.service;
 
 import com.tungduong.springdemo.model.User;
 import com.tungduong.springdemo.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,12 +13,17 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository){
+    public UserService(UserRepository repository,PasswordEncoder passwordEncoder){
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
    public void createUser(User user){
+        String hashPassword = passwordEncoder.encode(user.getPassword());
+        boolean checkPass = passwordEncoder.matches(user.getPassword(),hashPassword);
+        user.setPassword(hashPassword);
         repository.save(user);
    }
    public List<User> readUser(){
