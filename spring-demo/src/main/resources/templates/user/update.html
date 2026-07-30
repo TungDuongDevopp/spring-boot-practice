@@ -22,6 +22,13 @@
 					       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
 					<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"/>
 				</div>
+				<div class="mb-3" >
+					<label class="form-label">Role</label>
+					<select class="form-select" th:field="*{role}">
+						<option value="ADMIN">ADMIN</option>
+						<option value="USER">USER</option>
+					</select >
+				</div>
 				<div class="mb-3">
 					<label class="form-label" >Email</label>
 					<input type="text" class="form-control" th:field="*{email}"

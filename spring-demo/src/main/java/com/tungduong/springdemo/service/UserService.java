@@ -5,58 +5,75 @@ import com.tungduong.springdemo.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
-    private final UserRepository repository;
-    private final PasswordEncoder passwordEncoder;
+        private final UserRepository userRepository;
+        private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository,PasswordEncoder passwordEncoder){
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-    }
+        public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+            this.userRepository = userRepository;
+            this.passwordEncoder = passwordEncoder;
+        }
 
-   public void createUser(User user){
-        String hashPassword = passwordEncoder.encode(user.getPassword());
-        boolean checkPass = passwordEncoder.matches(user.getPassword(),hashPassword);
-        user.setPassword(hashPassword);
-        repository.save(user);
-   }
-   public List<User> getAllUser(){
-        List<User> userList = repository.findAll();
-        return userList;
-   }
+        public List<User> getAllUser() {
+            return userRepository.findAll();
+        }
 
-   public Optional<User> getUserById(Long id){
-       return repository.findById(id);
-   }
+        public User createUser(User user) {
 
-    public Optional<User> getUserByEmail(String email){
-        return repository.findByEmail(email);
-    }
+            String hashPassword = this.passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashPassword);
+            this.userRepository.save(user);
+            return user;
 
-   public User updateUser(User user){
 
-        Optional<User> optional = getUserById(user.getId());
-        if(optional.isEmpty()) return null;
+        }
 
-        User currentUser = optional.get();
-        currentUser.setName(user.getName());
-        currentUser.setEmail(user.getEmail());
-        currentUser.setAddress(user.getAddress());
-        repository.save(currentUser);
-        return currentUser;
-   }
-   public boolean deleteUser (Long id){
-       if(repository.existsById(id)) return false;
-       repository.deleteById(id);
-       return true;
-   }
-   public Optional<User> getUserByName(String name){
-        return repository.findByName(name);
-   }
+        public Optional<User> findUserById(Long id) {
+            return userRepository.findById(id);
+        }
+
+        public User updateUser(User inputUser) {
+            Optional<User> opt = findUserById(inputUser.getId());
+            if(opt.isEmpty()) return null;
+            User currentUserInDB = opt.get();
+            currentUserInDB.setName(inputUser.getName());
+            currentUserInDB.setEmail(inputUser.getEmail());
+            currentUserInDB.setAddress(inputUser.getAddress());
+            currentUserInDB.setRole(inputUser.getRole());
+            userRepository.save(currentUserInDB);
+            return currentUserInDB;
+        }
+        public boolean deleteUserById(Long id) {
+        if(!userRepository.existsById(id)) return false;
+        userRepository.deleteById(id);
+        return true;
+        }
+
+        public Optional<User> getUserByEmail(String email) {
+           return userRepository.findByEmail(email);
+        }
+
+         public boolean isEmailExist(String email) {
+        return this.userRepository.existsByEmail(email);
+        }
+
+         public User handleRegister(User user) {
+             String hashPassword = this.passwordEncoder.encode(user.getPassword());
+             user.setPassword(hashPassword);
+             user.setRole("USER");
+             userRepository.save(user);
+             return user;
+
+        }
 }
+
+
+
+
+

@@ -25,6 +25,7 @@
 				<tr>
 					<th scope="col">Id</th>
 					<th scope="col">Name</th>
+					<th scope="col">Role</th>
 					<th scope="col">Email</th>
 					<th scope="col">Address</th>
 					<th scope="col">Thao tác</th>
@@ -35,6 +36,7 @@
 				<tr th:unless="${#lists.isEmpty(users)}" th:each="user: ${users}">
 					<th th:text="${user.id}" class="text-center"></th>
 					<td th:text="${user.name}"/>
+					<td th:text="${user.role}"/>
 					<td th:text="${user.email}"/>
 					<td th:text="${user.address}"/>
 					<td>

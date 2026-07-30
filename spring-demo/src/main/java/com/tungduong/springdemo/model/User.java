@@ -23,14 +23,9 @@ public class User {
     private String address;
 
 
+    private String role;
+
     public User(){}
 
-    public User(Long id, String name,String password,String email, String address) {
-        this.id = id;
-        this.password = password;
-        this.address = address;
-        this.email = email;
-        this.name = name;
-    }
 
 }

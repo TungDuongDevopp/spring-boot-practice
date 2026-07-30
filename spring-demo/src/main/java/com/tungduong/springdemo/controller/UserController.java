@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller  // Controller rest chuyên nhận request HTTP trả trực tiếp dữ liệu
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
@@ -19,11 +19,6 @@ public class UserController {
 
     public UserController(UserService service) {
         this.service = service;
-    }
-
-    @ModelAttribute("name")
-    public String name() {
-        return "Dương";
     }
 
     @GetMapping
@@ -49,7 +44,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String getUpdatePage(Model model, @PathVariable Long id){
-        User updateUser =  service.getUserById(id).orElse(null);
+        User updateUser =  service.findUserById(id).orElse(null);
         model.addAttribute("user",updateUser);
         return "user/update";
     }
@@ -63,8 +58,7 @@ public class UserController {
     }
     @DeleteMapping("/delete/{id}")
     public String postDeletePage(@PathVariable Long id){
-
-        service.deleteUser(id);
+        service.deleteUserById(id);
         return "redirect:/user";
     }
 

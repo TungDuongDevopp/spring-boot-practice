@@ -30,7 +30,7 @@ public class CustomUserDetailService implements UserDetailsService {
         return User.builder()
                 .username(myUser.getEmail())
                 .password(myUser.getPassword())
-                .authorities("ROLE_USER")
+                .authorities(myUser.getRole())
                 .build();
 
 
