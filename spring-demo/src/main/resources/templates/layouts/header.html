@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<title>Header @hoidanit</title>
@@ -26,14 +28,26 @@
 								th:classappend="${currentPage == 'user'} ? 'active' ">Manage User</a>
 						</li>
 					</ul>
+					<div sec:authorize="isAuthenticated()" style="margin-right: 20px">
+						<span>
+							Welcome,
+							<strong sec:authentication="name"></strong>
+						</span>
+					</div>
+
 					<div class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 							aria-expanded="false">
 							Settings
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="/login">Login</a></li>
-							<li><a class="dropdown-item" href="#">Logout</a></li>
+							<li sec:authorize="!isAuthenticated()"><a class="dropdown-item"
+									th:href="@{/login}">Login</a></li>
+							<li sec:authorize="isAuthenticated()">
+								<form th:method="POST" th:action="@{/logout}">
+									<button class="dropdown-item">Logout</button>
+								</form>
+							</li>
 						</ul>
 					</div>
 				</div>

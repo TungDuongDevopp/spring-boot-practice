@@ -25,7 +25,7 @@ public class HomeController {
 		return "auth/home";
 	}
 
-	@GetMapping("/login1")
+	@GetMapping("/login")
 	public String login() {
 		return "auth/login";
 	}
