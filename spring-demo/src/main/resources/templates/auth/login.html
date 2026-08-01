@@ -29,6 +29,9 @@
 										<div th:if="${param.logout}" class="alert alert-success">
 											Bạn đã đăng xuất thành công.
 										</div>
+										<div th:if="${param.expire}" class="alert alert-warning">
+											Phiên đăng nhập của bạn đã hết hạn.
+										</div>
 										<form th:method="POST" th:action="@{/login}">
 											<div class="form-floating mb-3">
 												<input class="form-control" type="email" placeholder=""

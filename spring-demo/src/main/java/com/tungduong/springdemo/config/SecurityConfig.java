@@ -42,8 +42,9 @@ public class SecurityConfig {
                 requests.requestMatchers("/","/login","/register").permitAll()
                         .requestMatchers("/user/**").hasRole("ADMIN")
                 .anyRequest().authenticated());
-        http.formLogin(form->form.loginPage("/login"));
+        http.formLogin(form->form.loginPage("/login").failureUrl("/login?error"));
         http.exceptionHandling(e-> e.accessDeniedPage("/access-denied"));
+        http.sessionManagement(s->s.maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/login?expire"));
         return http.build();
     }
 }
