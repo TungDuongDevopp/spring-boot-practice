@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -45,6 +46,15 @@ public class SecurityConfig {
         http.formLogin(form->form.loginPage("/login").failureUrl("/login?error"));
         http.exceptionHandling(e-> e.accessDeniedPage("/access-denied"));
         http.sessionManagement(s->s.maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/login?expire"));
+        http.rememberMe(r->r.rememberMeServices(rememberMeServices()));
         return http.build();
+    }
+
+    @Bean
+    SpringSessionRememberMeServices rememberMeServices(){
+        SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
+        rememberMeServices.setAlwaysRemember(false);
+        rememberMeServices.setValiditySeconds(30*24*60*60);
+        return rememberMeServices;
     }
 }
