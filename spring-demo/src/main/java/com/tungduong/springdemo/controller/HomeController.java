@@ -2,6 +2,7 @@ package com.tungduong.springdemo.controller;
 
 import com.tungduong.springdemo.model.User;
 import com.tungduong.springdemo.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,10 @@ public class HomeController {
 		return "auth/login";
 	}
 
+	@GetMapping("/access-denied")
+	public String deny() {
+		return "auth/deny";
+	}
 	@GetMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("user", new User());
